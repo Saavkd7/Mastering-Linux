@@ -1,0 +1,26 @@
+-rwxr-xr-x 1 root root   1984 set  5  2022 /usr/bin/zcat
+-rwxr-xr-x 1 root root   1678 set  5  2022 /usr/bin/zcmp
+-rwxr-xr-x 1 root root   5898 set  5  2022 /usr/bin/zdiff
+-rwxr-xr-x 1 root root  26840 gen 30 09:20 /usr/bin/zdump
+-rwxr-xr-x 1 root root     29 set  5  2022 /usr/bin/zegrep
+-rwxr-xr-x 1 root root 131840 mag  1  2022 /usr/bin/zenity
+-rwxr-xr-x 1 root root     29 set  5  2022 /usr/bin/zfgrep
+-rwxr-xr-x 1 root root   2081 set  5  2022 /usr/bin/zforce
+-rwxr-xr-x 1 root root   8103 set  5  2022 /usr/bin/zgrep
+-rwxr-xr-x 1 root root 203768 mar 25  2022 /usr/bin/zip
+-rwxr-xr-x 1 root root  72088 mar 25  2022 /usr/bin/zipcloak
+-rwxr-xr-x 1 root root  60065 lug 25  2025 /usr/bin/zipdetails
+-rwxr-xr-x 1 root root   2959 feb  1  2024 /usr/bin/zipgrep
+-rwxr-xr-x 1 root root 174512 feb  1  2024 /usr/bin/zipinfo
+-rwxr-xr-x 1 root root  63896 mar 25  2022 /usr/bin/zipnote
+-rwxr-xr-x 1 root root  59800 mar 25  2022 /usr/bin/zipsplit
+-rwxr-xr-x 1 root root  26952 mar 20  2023 /usr/bin/zjsdecode
+-rwxr-xr-x 1 root root   2206 set  5  2022 /usr/bin/zless
+lrwxrwxrwx 1 root root     24 mar 31  2025 /usr/bin/z-library -> /opt/Z-Library/z-library
+-rwxr-xr-x 1 root root   1842 set  5  2022 /usr/bin/zmore
+-rwxr-xr-x 1 root root   4577 set  5  2022 /usr/bin/znew
+-rwxr-xr-x 1 root root 875096 mar 24  2022 /usr/bin/zstd
+lrwxrwxrwx 1 root root      4 mar 19  2025 /usr/bin/zstdcat -> zstd
+-rwxr-xr-x 1 root root   3869 mar 24  2022 /usr/bin/zstdgrep
+-rwxr-xr-x 1 root root     30 mar 24  2022 /usr/bin/zstdless
+lrwxrwxrwx 1 root root      4 mar 19  2025 /usr/bin/zstdmt -> zstd

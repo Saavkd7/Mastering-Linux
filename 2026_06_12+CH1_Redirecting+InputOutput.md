@@ -1,28 +1,25 @@
 # 🐧 Mastering I/O Redirection: The Path to the Top 1%
 
-> "Linux is about imagination." — William E. Shotts [1]
-
-To reach the level of Linus Torvalds, you must master the "coolest feature" of the command line: **I/O Redirection**. This is the foundation that allows you to connect commands into powerful pipelines and manipulate data streams like a true expert [2].
-
 ---
 
 # 1. Core Concepts: Standard Input, Output, and Error
 
-In the Unix theme of "everything is a file," programs usually produce two types of output and take one type of input [3], [4]:
+In the Unix theme of "everything is a file," programs usually produce two types of output and take one type of input.
 
-*   **Standard Output (stdout - File Descriptor 1):** The program's results. By default, this is linked to the screen [4], [5].
-*   **Standard Error (stderr - File Descriptor 2):** Status and error messages. By default, this is also linked to the screen [4], [5].
-*   **Standard Input (stdin - File Descriptor 0):** Input provided to the program. By default, this is attached to the keyboard [4], [5].
+*   **Standard Output (stdout - File Descriptor 1):** The program's results. By default, this is linked to the screen.
+*   **Standard Error (stderr - File Descriptor 2):** Status and error messages. By default, this is also linked to the screen.
+*   **Standard Input (stdin - File Descriptor 0):** Input provided to the program. By default, this is attached to the keyboard.
 
 ---
 
 # 2. Redirecting Output (stdout)
 
-We can use I/O redirection to send results to files instead of the screen [6].
+We can use I/O redirection to send results to files instead of the screen.
 
 ## 2.1. The `>` Operator (Overwrite)
 Use `>` to redirect standard output to a file.
-**⚠️ WARNING:** If the file already exists, this operator **rewrites** it from the beginning (truncates it to zero length) [7].
+
+**⚠️ WARNING:** If the file already exists, this operator **rewrites** it from the beginning (truncates it to zero length).
 
 ```bash
 ls -l /usr/bin > ls-output.txt
@@ -37,7 +34,7 @@ To avoid deleting existing content, use >>. This appends the new output to the e
 ls -l /usr/bin >> ls-output.txt
 ls -l /usr/bin >> ls-output.txt
 ```
-**The file now contains the listing repeated three times [5].**
+**The file now contains the listing repeated three times.**
 
 --------------------------------------------------------------------------------
 ## 2.2. Redirecting Error (stderr)
@@ -85,7 +82,7 @@ Filters are commands used in pipelines to take data, transform it, and output it
 ### sort and uniq
 • `sort`: Arranges lines of text.
 • `uniq`: Removes duplicate lines from a sorted list.
-    ◦ `uniq -d`: Shows only the duplicate lines.
+	◦ `uniq -d`: Shows only the duplicate lines.
 ### wc (Word Count)
 Counts lines, words, and bytes.
 • `wc -l`: Counts lines. Useful for counting items in a list.
