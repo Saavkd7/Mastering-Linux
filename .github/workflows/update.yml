@@ -1,0 +1,93 @@
+name: Update Diary Placeholders
+
+on:
+  schedule:
+    - cron: "0 0 * * *"      # Se ejecuta diariamente a la medianoche UTC
+  workflow_dispatch:         # Permite la ejecución manual desde GitHub
+  push:                      # Se ejecuta en cada commit (opcional)
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Descargar el código del repositorio
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Paso 2: Calcular todas las fechas y reemplazar los placeholders
+      - name: Compute dates and replace in ALL *.md files
+        id: compute_dates
+        shell: bash
+        env:
+          # --- CONFIGURACIÓN DE FECHAS ---
+          # Contador 1: Fecha fija para el diario general.
+          DIARY_START_DATE: "2025-08-18"
+          
+          # Contador 2: Fecha fija para la carpeta Crash Python.
+          FOLDER_START_DATE: "2026-02-06"
+
+        run: |
+          # Detiene el script si cualquier comando falla
+          set -euo pipefail
+
+          # --- Fechas Generales ---
+          TODAY=$(date -u +%Y-%m-%d)
+          TODAY_DOT=$(date -u +%d.%m.%Y)
+          TODAY_PRETTY=$(date -u +"%A, %d %b %Y")
+          TODAY_SHORT=$(date -u +"%d %b %Y")
+
+          # --- Cálculo del Contador 1 (Fecha Fija) ---
+          DIARY_DAY_COUNT=$(( ( $(date -u -d "$TODAY" +%s) - $(date -u -d "$DIARY_START_DATE" +%s) ) / 86400 + 1 ))
+
+          # --- Cálculo del Contador 2 (Segunda Fecha Fija) ---
+          FOLDER_DAY_COUNT=$(( ( $(date -u -d "$TODAY" +%s) - $(date -u -d "$FOLDER_START_DATE" +%s) ) / 86400 + 1 ))
+          
+          # --- Mensajes de depuración que verás en el log de GitHub Actions ---
+          echo "----------------------------------------"
+          echo "Fecha de inicio del diario (fija): $DIARY_START_DATE"
+          echo "Días calculados para el diario: $DIARY_DAY_COUNT"
+          echo "----------------------------------------"
+          echo "Fecha de inicio de la carpeta (fija): $FOLDER_START_DATE"
+          echo "Días calculados para la carpeta: $FOLDER_DAY_COUNT"
+          echo "----------------------------------------"
+
+          # Exportar una variable para el mensaje del commit
+          echo "day_count_for_commit=${DIARY_DAY_COUNT}" >> "$GITHUB_OUTPUT"
+
+          # --- Búsqueda y Reemplazo en todos los archivos .md ---
+          files=$(git ls-files "*.md" || true)
+          if [ -z "$files" ]; then
+            echo "No se encontraron archivos Markdown en el repositorio."
+            exit 0
+          fi
+
+          while read -r file; do
+            [ -z "$file" ] && continue
+            echo "Actualizando placeholders en el archivo: $file"
+            sed -i \
+              -e "s/{{DAY_SINCE_2025_08_18}}/${DIARY_DAY_COUNT}/g" \
+              -e "s/{{DAYS_SINCE_FOLDER_START}}/${FOLDER_DAY_COUNT}/g" \
+              -e "s/{{DATE_ISO}}/${TODAY}/g" \
+              -e "s/{{DATE_DOT}}/${TODAY_DOT}/g" \
+              -e "s/{{DATE_PRETTY}}/${TODAY_PRETTY}/g" \
+              -e "s/{{DATE_SHORT}}/${TODAY_SHORT}/g" \
+              "$file"
+          done <<< "$files"
+
+      # Paso 3: Commitear y subir los cambios si los hay
+      - name: Commit changes if any
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No hay cambios para commitear."
+          else
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore: update markdown placeholders (Day ${{ steps.compute_dates.outputs.day_count_for_commit }})"
+            git push
+          fi
