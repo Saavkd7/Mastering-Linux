@@ -1,5 +1,5 @@
 # 🐧 Mastering I/O Redirection: The Path to the Top 1%
-
+Date 2026.02.06
 ---
 
 # 1. Core Concepts: Standard Input, Output, and Error
